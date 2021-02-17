@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+  app:
+    container_name: myapp
+    image: myapp
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresdb
+  postgresdb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=quartzdb

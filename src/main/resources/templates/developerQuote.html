@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Funny Developer Quotes</title>
+</head>
+<style>
+
+.header {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  color: #333;
+  margin: 10% 15%;
+}
+
+.icon {
+  display: block;
+  cursor: pointer;
+  margin: auto;
+  width: 10%;
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition: .5s;
+}
+
+.icon:hover {
+  cursor: pointer;
+  -webkit-filter: opacity(.2);
+  filter: opacity(.2);
+}
+
+.prompt {
+  cursor: pointer;
+  margin: auto;
+  width: 13rem;
+}
+
+#tweetQuote {
+  display: block;
+}
+
+#quote {
+  font-size: 2rem;
+}
+
+#author {
+  font-size: 1rem;
+}
+
+/*
+font-family: 'Montserrat', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Lato', sans-serif;
+font-family: 'Oswald', sans-serif;
+*/
+
+</style>
+<body>
+<script th:src="@{http://code.jquery.com/jquery-3.1.1.js}"></script>
+<script type="text/javascript">
+    function doRefresh(){
+    	window.location.reload();
+    }
+    $(function() {
+        setInterval(doRefresh, 3000);
+    });
+</script>
+<div class="header">
+  <p th:id="quote" th:text="${quote}"> Your quote will appear here </p>
+  <a th:id="tweetQuote" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+  <p th:id="author" th:text="${author}">--Author </p>
+  <div th:id="getMessage">
+	<img class="icon" th:src="@{https://d30y9cdsu7xlg0.cloudfront.net/png/17148-200.png}">
+    <p class="prompt">Please enlighten me</p>
+  </div> 
+</div>
+
+
+</body>
+</html>

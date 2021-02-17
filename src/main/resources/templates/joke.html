@@ -1,0 +1,42 @@
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Jokes</title>
+
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic}" rel="stylesheet" />
+ <title>Excuses For Lazy Coders</title>
+ <meta name="keywords" content="Programming, Programmer, Devloping, Developer, Coding, Coders, Excuses, Reasons, Lies, Fibs, Blame, Justifications" />
+ <meta name="description" content="Funny jokes" />
+ <link rel="canonical" th:href="@{http:localhost8080:/getAjoke/}" />
+ <style type="text/css">
+ * {
+ 		margin: 0;
+ 	} 
+ 	html, body {
+ 	height: 100%;
+ 	} 
+ 	.wrapper {
+ 	min-height: 100%; 
+ 	height: auto !important; 
+ 	height: 100%; 
+ 	margin: 0 auto -8em;
+ 	} 
+ 	.footer, .push {
+ 	height: 8em;
+ 	}
+ </style>
+</head>
+<body>
+ <div class="wrapper">
+  <center style="color: #333; padding-top: 200px; font-family: Courier; font-size: 24px; font-weight: bold;">
+  <a th:href="@{/getAJoke}" rel="nofollow" style="text-decoration: none; color: #333;">
+  <span th:text="${joke}">Your joke will appear here</span>
+  </a></center>
+  <div class="push"></div>
+ </div>
+
+</body>
+</html>

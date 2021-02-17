@@ -2,7 +2,7 @@
 Quartz application with spring boot and thymeleaf and postgresql as persistent datasource
 
 
-1. Pull application image from docker hub  `$docker pull rrishi633/quartapp`
+1. Pull application image from docker hub  `$docker pull rrishi633/quartzapp`
 2. Tag image to myapp `$docker tag rrishi633/quartzapp myapp`
 3. Get the docker-compose file from This repository `$wget https://github.com/cd-x/quartzDemo/docker-compose.yml`
 4. Good to go `$docker-compose up`

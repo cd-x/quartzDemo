@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresdb-configmap
+data:
+  postgres_host: postgresdb-service
+  database_name: quartzdb

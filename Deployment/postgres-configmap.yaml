@@ -5,3 +5,13 @@ metadata:
 data:
   postgres_host: postgresdb-service
   database_name: quartzdb
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+type: Opaque
+data:
+  postgres-root-username: cG9zdGdyZXMK
+  postgres-root-password: cGFzc3dvcmQK

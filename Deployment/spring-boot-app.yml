@@ -45,17 +45,24 @@ spec:
                 name: hostname-config
                 key: postgres_host
         image: rrishi633/quartzapp:1.2
+        ports:
+        - containerPort: 8080
+          name: server
+        - containerPort: 8081
+          name: management
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: myapp-service
 spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+  - port: 8081
+    targetPort: 8081
+    name: management
   selector:
     app: myapp
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-      nodePort: 30000
+  type: ClusterIP

@@ -10,7 +10,7 @@ kind: Deployment
 metadata:
   name: myapp
   labels:
-    {{- include "movies.labels" . | nindent 4 }}
+    {{- include "quartzapp.labels" . | nindent 4 }}
     app.kubernetes.io/component: myapp
 spec:
   replicas: {{ .Values.myapp.replicaCount }}

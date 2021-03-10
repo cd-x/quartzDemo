@@ -1,2 +1,2 @@
 deploy:
-  - helm upgrade chart --install quartzapp chart --set tag=1.2
+  - helm upgrade --install quartzapp chart --set tag=1.2

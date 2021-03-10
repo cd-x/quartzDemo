@@ -11,10 +11,6 @@ spec:
   rules:
     - http:
         paths:
-          - path: /getAJoke
-            backend:
-              serviceName: myapp-service
-              servicePort: 8080
           - path: /
             backend:
               serviceName: myapp-service

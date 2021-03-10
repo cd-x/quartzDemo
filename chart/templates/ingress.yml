@@ -9,9 +9,13 @@ metadata:
     kubernetes.io/ingress.allow-http: "false"
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-          backend:
-            serviceName: myapp-service
-            servicePort: 8080
+    - http:
+        paths:
+          - path: /getAJoke
+            backend:
+              serviceName: myapp-service
+              servicePort: 8080
+          - path: /
+            backend:
+              serviceName: myapp-service
+              servicePort: 8080

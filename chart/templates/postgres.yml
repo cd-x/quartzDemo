@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: postgres-config
   labels:
-    {{ - include "quartzapp.labels" . | nindent 4 }}
+    {{- include "quartzapp.labels" . | nindent 4 }}
     app.kubernetes.io/component: postgres
 data:
   postgres_user: {{ .Values.postgres.postgres_user }}

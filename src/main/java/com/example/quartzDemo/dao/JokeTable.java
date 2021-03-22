@@ -36,7 +36,7 @@ public class JokeTable {
 	}
 	@Override
 	public String toString() {
-		return "Model [id=" + id + ", content=" + content + "]";
+		return "JokeTable [id=" + id + ", content=" + content + "]";
 	}
 	
 }

@@ -5,10 +5,12 @@ package com.example.quartzDemo.service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import com.example.quartzDemo.info.CronJobInfo;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.CronTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,17 @@ public class SchedulerService {
 		try {
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (SchedulerException e) {
+			log.error(e.getMessage(),e);
+		}
+	}
+
+	public void scheduleCronJOb(final Class jobClass, final CronJobInfo cronJobInfo){
+		final JobDetail jobDetail = QuartzJobUtil.buildCronJobDetail(jobClass,cronJobInfo);
+		final Trigger trigger = (Trigger) QuartzJobUtil.buildCronTrigger(cronJobInfo, CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
+		try {
+			scheduler.scheduleJob(jobDetail,trigger);
+		}
+		catch (SchedulerException e){
 			log.error(e.getMessage(),e);
 		}
 	}

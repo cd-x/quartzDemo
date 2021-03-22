@@ -33,7 +33,8 @@ public class Quote implements Job{
 			//https://api.quotable.io/random   https://type.fit/api/quotes
 			//https://api.whatdoestrumpthink.com/api/v1/quotes/random
 			QuoteResponse quote = restTemplate.getForObject(url, QuoteResponse.class);
-			QuoteTable quoteToBeUpdated = quoteRepository.findById(1).orElse(new QuoteTable(1,"Your quote will appear here","rishi"));
+			QuoteTable quoteToBeUpdated = quoteRepository.findById(1)
+					.orElse(new QuoteTable(1,"Your quote will appear here","rishi"));
 			quoteToBeUpdated.setQuote(quote.getQuote());
 			quoteToBeUpdated.setAuthor(quote.getAuthor());
 			quoteRepository.save(quoteToBeUpdated);

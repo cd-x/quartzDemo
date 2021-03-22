@@ -30,7 +30,9 @@ public class JobController {
 
 	private final JokeRepository jokeRepository;
 	
-	public JobController(final SchedulerService service,final QuoteRepository quoteRepository,final JokeRepository jokeRepository) {
+	public JobController(final SchedulerService service,
+						 final QuoteRepository quoteRepository,
+						 final JokeRepository jokeRepository) {
 		super();
 		this.service = service;
 		this.quoteRepository = quoteRepository;
@@ -69,7 +71,8 @@ public class JobController {
 	@RequestMapping("/getAQuote")
 	public ModelAndView getAQuote() {
 		ModelAndView mv = new ModelAndView();
-		QuoteTable quote = quoteRepository.findById(1).orElse(new QuoteTable(1,"Your Quote will appear here.","-Author"));
+		QuoteTable quote = quoteRepository.findById(1)
+				.orElse(new QuoteTable(1,"Your Quote will appear here.","-Author"));
 		
 		log.info("Database content with id 1:"+ quote.toString());
 		
@@ -82,7 +85,8 @@ public class JobController {
 	@RequestMapping("/getAJoke")
 	public ModelAndView getAJoke() {
 		ModelAndView mv = new ModelAndView();
-		JokeTable joke = jokeRepository.findById(1).orElse(new JokeTable(1,"Your joke will appear here"));
+		JokeTable joke = jokeRepository.findById(1)
+				.orElse(new JokeTable(1,"Your joke will appear here"));
 		
 		log.info("From joke table with id as 1 :"+ joke.getContent());
 		

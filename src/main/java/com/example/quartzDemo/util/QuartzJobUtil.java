@@ -1,22 +1,18 @@
 package com.example.quartzDemo.util;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 
-import org.quartz.JobBuilder;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import com.example.quartzDemo.info.CronJobInfo;
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.quartzDemo.info.TimerInfo;
-import com.example.quartzDemo.job.DadJoke;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 
 public class QuartzJobUtil {
 
@@ -63,5 +59,31 @@ public class QuartzJobUtil {
 				.withSchedule(builder)
 				.startAt(startTime).endAt(endTime)
 				.build();
+	}
+
+	public static  JobDetail buildCronJobDetail(final Class jobClass,final CronJobInfo cronJobInfo){
+		final JobDataMap jobDataMap = new JobDataMap();
+		jobDataMap.put(jobClass.getSimpleName(), cronJobInfo);
+
+		return JobBuilder.newJob(jobClass)
+				.withIdentity(jobClass.getSimpleName())
+				.setJobData(jobDataMap)
+				.build();
+	}
+
+	public static CronTrigger buildCronTrigger(final CronJobInfo cronJobInfo,int misfireInstruction){
+		CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
+		cronTriggerFactoryBean.setCronExpression(cronJobInfo.getCronExpression());
+		cronTriggerFactoryBean.setStartTime(cronJobInfo.getStartDate());
+		cronTriggerFactoryBean.setName(cronJobInfo.getJobName());
+		cronTriggerFactoryBean.setMisfireInstruction(misfireInstruction);
+		try{
+			cronTriggerFactoryBean.afterPropertiesSet();
+			log.info("CronTgrigger created.");
+		}
+		catch (ParseException e){
+			log.error(e.getMessage(),e);
+		}
+		return (CronTrigger) cronTriggerFactoryBean.getObject();
 	}
 }

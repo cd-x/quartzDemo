@@ -59,14 +59,6 @@ font-family: 'Oswald', sans-serif;
 </style>
 <body>
 <script th:src="@{http://code.jquery.com/jquery-3.1.1.js}"></script>
-<script type="text/javascript">
-    function doRefresh(){
-    	window.location.reload();
-    }
-    $(function() {
-        setInterval(doRefresh, 3000);
-    });
-</script>
 <div class="header">
   <p th:id="quote" th:text="${quote}"> Your quote will appear here </p>
   <a th:id="tweetQuote" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>

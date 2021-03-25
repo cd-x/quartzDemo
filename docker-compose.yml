@@ -8,6 +8,12 @@ services:
       - "8080:8080"
     depends_on:
       - postgresdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=quartzdb
+      - POSTGRES_HOST=postgresdb
+      - APP_TIMEZONE=Asia/Kolkata
   postgresdb:
     image: postgres
     ports:

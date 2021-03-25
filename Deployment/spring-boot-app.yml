@@ -44,7 +44,7 @@ spec:
               configMapKeyRef:
                 name: hostname-config
                 key: postgres_host
-        image: rrishi633/quartzapp:1.2
+        image: rrishi633/quartzapp:1.3
         ports:
         - containerPort: 8080
           name: server

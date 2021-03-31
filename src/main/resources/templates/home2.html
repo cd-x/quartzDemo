@@ -5,12 +5,11 @@
     <title>Quartz Application</title>
 
     <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-    <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic}" rel="stylesheet" />
 </head>
 
 <style>
 
-@import url();
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic");
 * {
   margin: 0;
   padding: 0;
@@ -182,8 +181,8 @@ function changeRunType(checkElem){
       <input placeholder="end" type="datetime-local" th:field="*{endDate}" tabindex="1" required autofocus>
     </fieldset>
     <fieldset>
-      <label>Job Gap Time (Ms)</label><br>
-      <input type="number" th:field="*{repeatIntervalMs}" tabindex="2" required>
+      <label>Trigger interval </label><br>
+      <input type="number" th:field="*{repeatInterval}" tabindex="2" required>
     </fieldset>
     <fieldset>
       <label>Run Forever</label>

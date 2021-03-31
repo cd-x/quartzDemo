@@ -39,7 +39,7 @@ public class QuartzJobUtil {
 	public static Trigger buildTrigger(final Class jobClass, final TimerInfo info){
 		SimpleScheduleBuilder builder = SimpleScheduleBuilder
 				.simpleSchedule().withMisfireHandlingInstructionFireNow()
-				.withIntervalInMilliseconds(info.getRepeatIntervalMs());
+				.withIntervalInSeconds(info.getRepeatInterval());
 
 		if(info.isRunForever()) {
 			builder = builder.repeatForever();

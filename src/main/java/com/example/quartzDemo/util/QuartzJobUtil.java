@@ -53,12 +53,25 @@ public class QuartzJobUtil {
 
 		log.info("system time: "+ LocalDateTime.now() + " collected start time: "+startTime);
 
-		return TriggerBuilder
-				.newTrigger()
-				.withIdentity(jobClass.getSimpleName()).forJob(jobClass.getSimpleName())
-				.withSchedule(builder)
-				.startAt(startTime).endAt(endTime)
-				.build();
+		Trigger trigger;
+		if(info.isRunForever()){
+			trigger = TriggerBuilder
+					.newTrigger()
+					.withIdentity(jobClass.getSimpleName())
+					.forJob(jobClass.getSimpleName())
+					.withSchedule(builder)
+					.startAt(startTime)
+					.build();
+		}
+		else {
+			trigger = TriggerBuilder
+					.newTrigger()
+					.withIdentity(jobClass.getSimpleName()).forJob(jobClass.getSimpleName())
+					.withSchedule(builder)
+					.startAt(startTime).endAt(endTime)
+					.build();
+		}
+		return trigger;
 	}
 
 	public static  JobDetail buildCronJobDetail(final Class jobClass,final CronJobInfo cronJobInfo){

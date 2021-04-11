@@ -4,12 +4,14 @@ package com.example.quartzDemo.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.quartzDemo.info.CronJobInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,13 +42,19 @@ public class JobController {
 	}
 
 	
-	@RequestMapping("/")
-	public String homepage(Model model) {
-		TimerInfo timer =  new TimerInfo();
-		model.addAttribute("timer", timer);
+	@RequestMapping("/{type}")
+	public String homepage(@PathVariable String type, Model model) {
+		if(type.equalsIgnoreCase("simple"))
+			model.addAttribute("timer", new TimerInfo());
+		else
+			model.addAttribute("timer",new CronJobInfo());
+
 		List<String> jobList = Arrays.asList("Quote", "DadJoke");
         model.addAttribute("jobList", jobList);
-		return "home2";
+		if(type.equalsIgnoreCase("simple"))
+	        return "home2";
+		else
+			return "cronjob";
 	}
 	
 	
@@ -63,6 +71,22 @@ public class JobController {
 			log.error(e.getMessage(), e);
 		}
 		service.schedule(jobName,info);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("success");
+		return mv;
+	}
+	@RequestMapping("/startCronJob")
+	public ModelAndView runTimer(@ModelAttribute("timer") CronJobInfo cronJobInfo){
+		log.info(cronJobInfo.toString());
+		String jobPackage = "com.example.quartzDemo.job.";
+		Class jobName = null;
+
+		try {
+			jobName = Class.forName(jobPackage + cronJobInfo.getJobName());
+		} catch (ClassNotFoundException e) {
+			log.error(e.getMessage(), e);
+		}
+		service.scheduleCronJOb (jobName,cronJobInfo);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("success");
 		return mv;

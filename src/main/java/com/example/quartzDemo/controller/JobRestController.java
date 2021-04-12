@@ -7,6 +7,7 @@ import com.example.quartzDemo.dao.QuoteTable;
 import com.example.quartzDemo.info.CronJobInfo;
 import com.example.quartzDemo.info.TimerInfo;
 import com.example.quartzDemo.service.SchedulerService;
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class JobRestController {
             jobName = Class.forName(jobPackage + info.getJobName());
             service.schedule(jobName,info);
             return "Scheduled";
-        } catch (ClassNotFoundException  e) {
+        } catch (ClassNotFoundException | SchedulerException e) {
             log.error(e.getMessage(), e);
             return  "Failed to schedule";
         }

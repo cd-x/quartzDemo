@@ -40,7 +40,7 @@ public class SchedulerService {
 
 
 
-	public void schedule(final Class jobClass,final TimerInfo info){
+	public void schedule(final Class jobClass,final TimerInfo info) throws SchedulerException{
 		final JobDetail jobDetail = QuartzJobUtil.buildJobDetail(jobClass, info);
 		final Trigger trigger = QuartzJobUtil.buildTrigger(jobClass, info);
 
@@ -48,6 +48,7 @@ public class SchedulerService {
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (SchedulerException e) {
 			log.error(e.getMessage(),e);
+			throw e;
 		}
 	}
 

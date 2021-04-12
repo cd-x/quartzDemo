@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.quartzDemo.info.CronJobInfo;
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,11 @@ public class JobController {
 		} catch (ClassNotFoundException e) {
 			log.error(e.getMessage(), e);
 		}
-		service.schedule(jobName,info);
+		try{
+			service.schedule(jobName,info);
+		}catch (SchedulerException e) {
+			log.error(e.getMessage(), e);
+		}
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("success");
 		return mv;

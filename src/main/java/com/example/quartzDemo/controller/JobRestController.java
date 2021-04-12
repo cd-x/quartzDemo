@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class JobRestController {
@@ -78,4 +80,8 @@ public class JobRestController {
         }
     }
 
+    @GetMapping("/getAllRunningTimers")
+    public List<TimerInfo> getAllRunningTimers(){
+       return service.getAllRunningTimers();
+    }
 }

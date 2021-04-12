@@ -1,5 +1,6 @@
 package com.example.quartzDemo.info;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.*;
@@ -10,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TimerInfo {
+public class TimerInfo implements Serializable {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date startDate;

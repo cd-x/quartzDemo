@@ -4,7 +4,6 @@ import com.example.quartzDemo.dao.JokeRepository;
 import com.example.quartzDemo.dao.JokeTable;
 import com.example.quartzDemo.dao.QuoteRepository;
 import com.example.quartzDemo.dao.QuoteTable;
-import com.example.quartzDemo.info.CronJobInfo;
 import com.example.quartzDemo.info.TimerInfo;
 import com.example.quartzDemo.service.SchedulerService;
 import org.quartz.SchedulerException;
@@ -40,7 +39,7 @@ public class JobRestController {
 
         try {
             jobName = Class.forName(jobPackage + info.getJobName());
-            service.schedule(jobName,info);
+            service.scheduleJob(jobName,info);
             return "Scheduled";
         } catch (ClassNotFoundException | SchedulerException e) {
             log.error(e.getMessage(), e);
@@ -65,24 +64,29 @@ public class JobRestController {
         return quote.toString();
     }
 
-    @PostMapping("/startCronJob")
-    public String startCronJob(@RequestBody CronJobInfo cronJobInfo){
-        log.info(cronJobInfo.toString());
-        String jobPackage = "com.example.quartzDemo.job.";
-        Class jobName = null;
+    @GetMapping("/getAllRunningJobs")
+    public List<TimerInfo> getAllRunningJobs(){
+        return service.getAllRunningJobs();
+    }
 
+    @GetMapping("/getRunningJob/{jobKey}")
+    public Object getRunningJob(@PathVariable String jobKey){
+        return service.getRunningJob(jobKey);
+    }
+
+    @PutMapping("/updateJob/{jobKey}")
+    public String updateJob(@PathVariable final String jobKey,@RequestBody TimerInfo newJobDetail){
         try {
-            jobName = Class.forName(jobPackage + cronJobInfo.getJobName());
-            service.scheduleCronJOb(jobName,cronJobInfo);
-            return "Scheduled cron job";
-        } catch (ClassNotFoundException  e) {
-            log.error(e.getMessage(), e);
-            return  "Failed to schedule cron job";
+            service.updateJob(jobKey,newJobDetail);
+            return "Successfully updated job "+jobKey;
+        }catch (SchedulerException e){
+            log.error("Failed to update the Job with ID '{}'",jobKey);
+            return "Update Failed : Job doesn't exist";
         }
     }
 
-    @GetMapping("/getAllRunningTimers")
-    public List<TimerInfo> getAllRunningTimers(){
-       return service.getAllRunningTimers();
+    @DeleteMapping("/deleteJob/{jobKey}")
+    public Boolean deleteJob(@PathVariable String jobKey){
+        return service.deleteJob(jobKey);
     }
 }

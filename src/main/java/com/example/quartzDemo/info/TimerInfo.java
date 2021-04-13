@@ -15,13 +15,16 @@ public class TimerInfo implements Serializable {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date startDate;
-	
+
+	private boolean cronJob;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date endDate;
 	
 	private int repeatInterval;
 	private boolean runForever;
 	private int totalFireCount;
-	
+
+	private String cronExpression;
 	private String jobName;
 }

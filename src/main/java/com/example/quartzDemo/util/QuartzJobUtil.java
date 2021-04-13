@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 
-import com.example.quartzDemo.info.CronJobInfo;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,17 +73,8 @@ public class QuartzJobUtil {
 		return trigger;
 	}
 
-	public static  JobDetail buildCronJobDetail(final Class jobClass,final CronJobInfo cronJobInfo){
-		final JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put(jobClass.getSimpleName(), cronJobInfo);
 
-		return JobBuilder.newJob(jobClass)
-				.withIdentity(jobClass.getSimpleName())
-				.setJobData(jobDataMap)
-				.build();
-	}
-
-	public static CronTrigger buildCronTrigger(final CronJobInfo cronJobInfo,int misfireInstruction){
+	public static CronTrigger buildCronTrigger(final TimerInfo cronJobInfo,int misfireInstruction){
 		CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
 		cronTriggerFactoryBean.setCronExpression(cronJobInfo.getCronExpression());
 		cronTriggerFactoryBean.setStartTime(cronJobInfo.getStartDate());

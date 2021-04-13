@@ -5,12 +5,7 @@ package com.example.quartzDemo.service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import com.example.quartzDemo.info.CronJobInfo;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.quartz.CronTrigger;
+import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +25,7 @@ public class SchedulerService {
 
 	private static final Logger log = LoggerFactory.getLogger(SchedulerService.class);
 
-	private  Scheduler scheduler;
+	final private  Scheduler scheduler;
 
 	@Autowired
 	public SchedulerService(Scheduler scheduler) {
@@ -39,10 +34,13 @@ public class SchedulerService {
 	}
 
 
-
-	public void schedule(final Class jobClass,final TimerInfo info) throws SchedulerException{
+	public void scheduleJob(final Class jobClass,final TimerInfo info) throws SchedulerException{
 		final JobDetail jobDetail = QuartzJobUtil.buildJobDetail(jobClass, info);
-		final Trigger trigger = QuartzJobUtil.buildTrigger(jobClass, info);
+		final Trigger trigger;
+		if(info.isCronJob())
+			trigger = QuartzJobUtil.buildCronTrigger(info, CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
+		else
+			trigger = QuartzJobUtil.buildTrigger(jobClass, info);
 
 		try {
 			scheduler.scheduleJob(jobDetail, trigger);
@@ -52,18 +50,8 @@ public class SchedulerService {
 		}
 	}
 
-	public void scheduleCronJOb(final Class jobClass, final CronJobInfo cronJobInfo){
-		final JobDetail jobDetail = QuartzJobUtil.buildCronJobDetail(jobClass,cronJobInfo);
-		final Trigger trigger = (Trigger) QuartzJobUtil.buildCronTrigger(cronJobInfo, CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
-		try {
-			scheduler.scheduleJob(jobDetail,trigger);
-		}
-		catch (SchedulerException e){
-			log.error(e.getMessage(),e);
-		}
-	}
 
-	public List<TimerInfo> getAllRunningTimers(){
+	public List<TimerInfo> getAllRunningJobs(){
 		try{
 			return scheduler.getJobKeys(GroupMatcher.anyGroup())
 					.stream().map(jobKey -> {
@@ -83,6 +71,47 @@ public class SchedulerService {
 		}
 	}
 
+	public TimerInfo getRunningJob(final String jobKey){
+		try{
+			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobKey));
+			if(jobDetail == null){
+				log.error("Failed to find job with ID '{}'",jobKey);
+				return null;
+			}
+			else{
+				return (TimerInfo) jobDetail.getJobDataMap().get(jobKey);
+			}
+		}catch (SchedulerException e){
+			log.error(e.getMessage(),e);
+			return null;
+		}
+	}
+
+	public void updateJob(final String jobKey,TimerInfo newJobDetail) throws SchedulerException{
+		try{
+			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobKey));
+			if (jobDetail == null) {
+				log.error("[Action: update] Failed to find job with ID '{}'", jobKey);
+				throw new SchedulerException("Update Failed");
+			}
+			jobDetail.getJobDataMap().put(jobKey, newJobDetail);
+
+			scheduler.addJob(jobDetail, true, true);
+		}catch (SchedulerException e){
+			log.error("Update failed:: "+e.getMessage(),e);
+			throw e;
+		}
+	}
+
+	public boolean deleteJob(final String jobKey) {
+		try {
+			return scheduler.deleteJob(new JobKey(jobKey));
+		} catch (SchedulerException e) {
+			log.error(e.getMessage(), e);
+			return false;
+		}
+	}
+	
 
 	@PostConstruct
 	public void init() {

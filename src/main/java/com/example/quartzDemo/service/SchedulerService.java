@@ -111,7 +111,34 @@ public class SchedulerService {
 			return false;
 		}
 	}
-	
+
+	public boolean pauseJob(final String jobKey){
+		try{
+			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobKey));
+			if(jobDetail != null){
+				scheduler.pauseJob(new JobKey(jobKey));
+				log.info("Job paused with id '{}'",jobKey);
+				return true;
+			}
+			return  false;
+		}catch (SchedulerException e){
+			log.error("[Action: Pause] Failed , Job '{}' doesn't exist.",jobKey);
+			return  false;
+		}
+	}
+
+	public void resumeJob(final String jobKey) throws SchedulerException{
+		try{
+			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobKey));
+			if(jobDetail != null){
+				scheduler.resumeJob(new JobKey(jobKey));
+				log.info("Job resumed with id '{}'",jobKey);
+			}
+		}catch (SchedulerException e){
+			log.error("[Action: resume] Failed , Job '{}' doesn't exist.",jobKey);
+			throw e;
+		}
+	}
 
 	@PostConstruct
 	public void init() {

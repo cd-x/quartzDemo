@@ -70,7 +70,7 @@ public class JobRestController {
     }
 
     @GetMapping("/getRunningJob/{jobKey}")
-    public Object getRunningJob(@PathVariable String jobKey){
+    public TimerInfo getRunningJob(@PathVariable String jobKey){
         return service.getRunningJob(jobKey);
     }
 
@@ -86,7 +86,23 @@ public class JobRestController {
     }
 
     @DeleteMapping("/deleteJob/{jobKey}")
-    public Boolean deleteJob(@PathVariable String jobKey){
+    public boolean deleteJob(@PathVariable String jobKey){
         return service.deleteJob(jobKey);
     }
+
+    @PutMapping("/pauseJob/{jobKey}")
+    public boolean pauseJob(@PathVariable String jobKey){
+        return service.pauseJob(jobKey);
+    }
+
+    @PutMapping("/resumeJob/{jobKey}")
+    public String resumeJob(@PathVariable String jobKey){
+        try{
+            service.resumeJob(jobKey);
+        }catch (SchedulerException e) {
+            return "Can't Resume job: " + jobKey;
+        }
+        return "Job resumed with id: "+jobKey;
+    }
+
 }

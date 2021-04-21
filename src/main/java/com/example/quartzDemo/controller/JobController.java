@@ -41,8 +41,8 @@ public class JobController {
 	}
 
 	
-	@RequestMapping("/{type}")
-	public String homepage(@PathVariable String type, Model model) {
+	@RequestMapping("/")
+	public String homepage(Model model) {
 		model.addAttribute("timer", new TimerInfo());
 
 		List<String> jobList = Arrays.asList("Quote", "DadJoke");

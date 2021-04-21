@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Running Jobs</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <h1 class="display-4" align="center">All running jobs</h1>
+    </div>
+    <container>
+        <div>
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Job Name</th>
+                        <th scope="col">Cron Job</th>
+                        <th scope="col">Initialized At</th>
+                        <th scope="col">End At</th>
+                        <th scope="col">Trigger Interval</th>
+                        <th scope="col">Run Forever</th>
+                        <th scope="col">Trigger Count</th>
+                        <th scope="col">Cron Expression</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${allRunningJobDetails.isEmpty()}">
+                        <td colspan="2"> No Jobs Available </td>
+                    </tr>
+                    <tr th:each="TimerInfo: ${allRunningJobDetails}">
+                        <td><span th:text="${TimerInfo.getJobName()}"></span></td>
+                        <td><span th:text="${TimerInfo.isCronJob()}"> </span></td>
+                        <td><span th:text="${TimerInfo.getStartDate()}"></span></td>
+                        <td><span th:text="${TimerInfo.getEndDate()}"> </span></td>
+                        <td><span th:text="${TimerInfo.getRepeatInterval()}"></span></td>
+                        <td><span th:text="${TimerInfo.isRunForever()}"></span></td>
+                        <td><span th:text="${TimerInfo.getTotalFireCount()}"> </span></td>
+                        <td><span th:text="${TimerInfo.getCronExpression()}"> </span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </container>
+</body>
+</html>

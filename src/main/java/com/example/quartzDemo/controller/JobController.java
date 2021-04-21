@@ -73,6 +73,14 @@ public class JobController {
 		return mv;
 	}
 
+
+	@RequestMapping("/getAllRunningJobs")
+	public ModelAndView getAllRunningJobs(ModelAndView modelAndView){
+		List<TimerInfo> allRunningJobDetails = service.getAllRunningJobs();
+		modelAndView.addObject("allRunningJobDetails",allRunningJobDetails);
+		modelAndView.setViewName("allRunningJobs");
+		return  modelAndView;
+	}
 	
 	@RequestMapping("/getAQuote")
 	public ModelAndView getAQuote() {

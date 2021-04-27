@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.quartzDemo.dao.JokeRepository;
@@ -81,7 +79,57 @@ public class JobController {
 		modelAndView.setViewName("allRunningJobs");
 		return  modelAndView;
 	}
-	
+
+
+	@RequestMapping("/actions")
+    public ModelAndView actions( ModelAndView modelAndView){
+        List<TimerInfo> jobList = service.getAllRunningJobs();
+	    modelAndView.addObject("jobList",jobList);
+	    modelAndView.setViewName("actions");
+	    return modelAndView;
+    }
+
+    @RequestMapping(value="/action/{jobKey}", method= RequestMethod.POST, params="action=pause")
+    public ModelAndView pause(@PathVariable String jobKey,ModelAndView modelAndView){
+		boolean paused = service.pauseJob(jobKey);
+        List<TimerInfo> jobList = service.getAllRunningJobs();
+        modelAndView.addObject("jobList",jobList);
+	    if(paused)
+    	    log.info("[Paused] : "+jobKey);
+	    else
+	        log.error("[Paused Failed] : "+jobKey +" already in paused state.");
+
+	    modelAndView.setViewName("actions");
+	    return modelAndView;
+    }
+
+    @RequestMapping(value="/action/{jobKey}", method= RequestMethod.POST, params="action=resume")
+    public ModelAndView resume(@PathVariable String jobKey,ModelAndView modelAndView){
+        boolean resumed = service.resumeJob(jobKey);
+        List<TimerInfo> jobList = service.getAllRunningJobs();
+        modelAndView.addObject("jobList",jobList);
+        if(resumed)
+            log.info("[Resumed] : "+jobKey);
+        else
+            log.error("[Resumed Failed] : "+jobKey +" already in running state.");
+
+        modelAndView.setViewName("actions");
+        return modelAndView;
+    }
+    @RequestMapping(value="/action/{jobKey}", method= RequestMethod.POST, params="action=delete")
+    public ModelAndView delete(@PathVariable String jobKey,ModelAndView modelAndView){
+        boolean deleted = service.deleteJob(jobKey);
+        List<TimerInfo> jobList = service.getAllRunningJobs();
+        modelAndView.addObject("jobList",jobList);
+        if(deleted)
+            log.info("[Deleted] : "+jobKey);
+        else
+            log.error("[Delete Failed] : "+jobKey +" doesn't exist.");
+
+        modelAndView.setViewName("actions");
+        return modelAndView;
+    }
+
 	@RequestMapping("/getAQuote")
 	public ModelAndView getAQuote() {
 		ModelAndView mv = new ModelAndView();

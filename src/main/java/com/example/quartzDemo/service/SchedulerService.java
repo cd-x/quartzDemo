@@ -127,16 +127,20 @@ public class SchedulerService {
 		}
 	}
 
-	public void resumeJob(final String jobKey) throws SchedulerException{
+	public boolean resumeJob(final String jobKey) {
 		try{
 			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobKey));
 			if(jobDetail != null){
 				scheduler.resumeJob(new JobKey(jobKey));
 				log.info("Job resumed with id '{}'",jobKey);
+				return true;
+			}
+			else{
+				return false;
 			}
 		}catch (SchedulerException e){
 			log.error("[Action: resume] Failed , Job '{}' doesn't exist.",jobKey);
-			throw e;
+			return false;
 		}
 	}
 

@@ -96,13 +96,8 @@ public class JobRestController {
     }
 
     @PutMapping("/resumeJob/{jobKey}")
-    public String resumeJob(@PathVariable String jobKey){
-        try{
-            service.resumeJob(jobKey);
-        }catch (SchedulerException e) {
-            return "Can't Resume job: " + jobKey;
-        }
-        return "Job resumed with id: "+jobKey;
+    public boolean resumeJob(@PathVariable String jobKey){
+        return service.resumeJob(jobKey);
     }
 
 }

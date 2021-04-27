@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>actions</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<style>
+    button{
+        margin-left: 10px;
+        margin-bottom: 20px;
+    }
+    .header{
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 10px;
+        margin-left: auto;
+    }
+    span{
+        margin-bottom: auto;
+        align-items: baseline;
+    }
+    p{
+      display: inline-block;
+        font-weight: bold;
+        font-size: large;
+    }
+
+</style>
+
+<body>
+    <div class="header">
+        <h3 align="center">Job Actions</h3>
+    </div>
+
+    <div align="center" class="container">
+        <div class="row">
+            <form  th:each="job : ${jobList}"  th:action="@{/action/__${job.getJobName()}__}" method=post>
+                <span>
+                    <p th:text="${job.getJobName()}"></p>
+                    <button type="submit" th:name="action" th:value="pause" class="btn btn-warning">Pause</button>
+                    <button type="submit" th:name="action" th:value="resume" class="btn btn-success">Resume</button>
+                    <button type="submit" th:name="action" th:value="delete" class="btn btn-danger">Delete</button>
+                </span>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

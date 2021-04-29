@@ -75,14 +75,8 @@ public class JobRestController {
     }
 
     @PutMapping("/updateJob/{jobKey}")
-    public String updateJob(@PathVariable final String jobKey,@RequestBody TimerInfo newJobDetail){
-        try {
-            service.updateJob(jobKey,newJobDetail);
-            return "Successfully updated job "+jobKey;
-        }catch (SchedulerException e){
-            log.error("Failed to update the Job with ID '{}'",jobKey);
-            return "Update Failed : Job doesn't exist";
-        }
+    public boolean updateJob(@PathVariable final String jobKey,@RequestBody TimerInfo newJobDetail){
+        return service.updateJob(jobKey,newJobDetail);
     }
 
     @DeleteMapping("/deleteJob/{jobKey}")

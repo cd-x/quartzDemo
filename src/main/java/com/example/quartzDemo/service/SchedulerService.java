@@ -87,19 +87,19 @@ public class SchedulerService {
 		}
 	}
 
-	public void updateJob(final String jobKey,TimerInfo newJobDetail) throws SchedulerException{
+	public boolean updateJob(final String jobKey,TimerInfo newJobDetail){
 		try{
 			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobKey));
 			if (jobDetail == null) {
 				log.error("[Action: update] Failed to find job with ID '{}'", jobKey);
-				throw new SchedulerException("Update Failed");
+				return false;
 			}
 			jobDetail.getJobDataMap().put(jobKey, newJobDetail);
-
 			scheduler.addJob(jobDetail, true, true);
+			return true;
 		}catch (SchedulerException e){
 			log.error("Update failed:: "+e.getMessage(),e);
-			throw e;
+			return  false;
 		}
 	}
 

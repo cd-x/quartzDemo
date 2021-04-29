@@ -117,11 +117,13 @@ public class JobController {
         modelAndView.setViewName("actions");
         return modelAndView;
     }
+
     @RequestMapping(value="/action/{jobKey}", method= RequestMethod.POST, params="action=delete")
     public ModelAndView delete(@PathVariable String jobKey,ModelAndView modelAndView){
         boolean deleted = service.deleteJob(jobKey);
         List<TimerInfo> jobList = service.getAllRunningJobs();
         modelAndView.addObject("jobList",jobList);
+
         if(deleted)
             log.info("[Deleted] : "+jobKey);
         else
@@ -129,6 +131,24 @@ public class JobController {
 
         modelAndView.setViewName("actions");
         return modelAndView;
+    }
+
+    @RequestMapping(value="/action/{jobKey}")
+    public ModelAndView update(@PathVariable String jobKey,
+                               @ModelAttribute("timer") TimerInfo timerInfo,
+                               ModelAndView modelAndView){
+		timerInfo.setJobName(jobKey);
+		boolean updated = service.updateJob(jobKey,timerInfo);
+		List<TimerInfo> jobList = service.getAllRunningJobs();
+		modelAndView.addObject("jobList",jobList);
+
+		if(updated)
+			log.info("[Updated] : "+jobKey);
+		else
+			log.error("[Update Failed] : "+jobKey +" doesn't exist.");
+
+		modelAndView.setViewName("actions");
+		return modelAndView;
     }
 
 	@RequestMapping("/getAQuote")

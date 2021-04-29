@@ -85,6 +85,7 @@ public class JobController {
     public ModelAndView actions( ModelAndView modelAndView){
         List<TimerInfo> jobList = service.getAllRunningJobs();
 	    modelAndView.addObject("jobList",jobList);
+	    modelAndView.addObject("timer",new TimerInfo());
 	    modelAndView.setViewName("actions");
 	    return modelAndView;
     }

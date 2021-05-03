@@ -133,7 +133,7 @@ public class JobController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/action/{jobKey}")
+    @RequestMapping(value="/action/{jobKey}",method = RequestMethod.POST,params = "action=update")
     public ModelAndView update(@PathVariable String jobKey,
                                @ModelAttribute("timer") TimerInfo timerInfo,
                                ModelAndView modelAndView){

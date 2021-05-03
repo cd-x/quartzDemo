@@ -31,7 +31,6 @@
 </style>
 
 <body>
-<script type="text/javascript" th:src="@{/js/script.js}"></script>
     <div class="header">
         <h3 align="center">Job Actions</h3>
     </div>
@@ -61,54 +60,54 @@
                             <div class="modal-body">
                                 <form th:action="@{/action/__${job.getJobName()}__}" th:object="${timer}" method=post>
 
-                                    <div id="startDate" class="form-group row">
-                                        <label for="start" class="col-sm-4 col-form-label">Start Date</label>
+                                    <div id="start" class="form-group row">
+                                        <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" type="datetime-local"
-                                                   th:field="*{startDate}" id="start">
+                                            <input class="form-control" type="datetime-local" th:name="startDate"
+                                                   th:value="${job.getStartDate()}" th:id="startDate" />
                                         </div>
                                     </div>
-                                    <div id="cronJob" class="form-group row">
-                                        <label for="cron" class="col-sm-4 col-form-label">Cron Job</label>
+                                    <div id="cron" class="form-group row">
+                                        <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
                                         <div class="form-check col-sm-8">
                                             <input class="form-check-input" type="checkbox"
-                                                   onclick="switchJobType()" th:field="*{cronJob}"
-                                                   id="cron">
+                                                   onclick="switchJobType()" th:value="${job.isCronJob()}"
+                                                   th:name="cronJob" th:id="cronJob">
                                         </div>
                                     </div>
-                                    <div id="endDate" class="form-group row">
-                                        <label for="end" class="col-sm-4 col-form-label">End Date</label>
+                                    <div id="end" class="form-group row">
+                                        <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
                                         <div class="col-sm-8">
                                             <input class="form-control" type="datetime-local"
-                                                   th:field="*{endDate}" id="end">
+                                                   th:value="${job.getEndDate()}" th:name="endDate" th:id="endDate">
                                         </div>
                                     </div>
-                                    <div id="repeatInterval" class="form-group row">
-                                        <label for="repeat" class="col-sm-4 col-form-label">Trigger Interval</label>
+                                    <div id="repeat" class="form-group row">
+                                        <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
                                         <div class="col-sm-8">
                                             <input  class="form-control" type="number"
-                                                   th:field ="*{repeatInterval}" id="repeat">
+                                                   th:value="${job.getRepeatInterval()}" th:name="repeatInterval" th:id="repeatInterval">
                                         </div>
                                     </div>
-                                    <div id="runForever" class="form-group row">
-                                        <label for="run" class="col-sm-4 col-form-label">Run Forever</label>
+                                    <div id="run" class="form-group row">
+                                        <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
                                         <div class="form-check col-sm-8">
                                             <input class="form-check-input" type="checkbox"
-                                                   th:field="*{runForever}" id="run">
+                                                   th:value="${job.isRunForever()}" th:name="runForever" th:id="runForever">
                                         </div>
                                     </div>
-                                    <div id="totalFireCount" class="form-group row">
-                                        <label for="totalFire" class="col-sm-4 col-form-label">Trigger Count</label>
+                                    <div id="totalFire" class="form-group row">
+                                        <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
                                         <div class="col-sm-8">
                                             <input  class="form-control" type="number"
-                                                   th:field ="*{totalFireCount}" id="totalFire">
+                                                   th:value="${job.getTotalFireCount()}" th:name="totalFireCount" th:id="totalFireCount">
                                         </div>
                                     </div>
-                                    <div id="cronExpression" class="form-group row">
-                                        <label for="cron-text" class="col-sm-4 col-form-label">Cron Expression</label>
+                                    <div id="cron-text" class="form-group row">
+                                        <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
                                         <div class="col-sm-8">
                                             <input  class="form-control" type="number"
-                                                   th:field ="*{cronExpression}" id="cron-text">
+                                                   th:value="${job.getCronExpression()}" th:name="cronExpression" th:id="cronExpression">
                                         </div>
                                     </div>
                                 </form>

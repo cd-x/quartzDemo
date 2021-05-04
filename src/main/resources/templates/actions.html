@@ -10,7 +10,7 @@
 <style>
     button{
         margin-left: 10px;
-        margin-bottom: 40px;
+        margin-bottom: 10px;
     }
     .header{
         align-items: center;
@@ -21,11 +21,14 @@
     span{
         margin-bottom: auto;
         align-items: baseline;
+        margin-bottom: 40px;
     }
     p{
       display: inline-block;
         font-weight: bold;
         font-size: large;
+        align-content: start;
+        margin-right: 40px;
     }
 
 </style>
@@ -47,92 +50,93 @@
     </div>
 
     <div align="center" class="container">
-        <div class="row">
-            <form  th:each="job : ${jobList}"  th:action="@{/action/__${job.getJobName()}__}" method=post>
-                <span>
+        <div th:each="job : ${jobList}" class="row mt-1" style="margin-bottom: 20px">
+            <form th:action="@{/action/__${job.getJobName()}__}" method=post>
+                <div class="col-sm-4" style="align-items: end">
                     <p th:text="${job.getJobName()}"></p>
-                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Update</button>
-                    <button type="submit" th:name="action" th:value="pause" class="btn btn-warning">Pause</button>
-                    <button type="submit" th:name="action" th:value="resume" class="btn btn-success">Resume</button>
-                    <button type="submit" th:name="action" th:value="delete" class="btn btn-danger">Delete</button>
-                </span>
+                </div>
+                <div class="col-sm-8">
+                        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Update</button>
+                        <button type="submit" th:name="action" th:value="pause" class="btn btn-warning">Pause</button>
+                        <button type="submit" th:name="action" th:value="resume" class="btn btn-success">Resume</button>
+                        <button type="submit" th:name="action" th:value="delete" class="btn btn-danger">Delete</button>
 
 
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
 
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title" th:text="${job.getJobName()}"></h4>
-                            </div>
-                            <div class="modal-body">
-                                <form th:action="@{/action/__${job.getJobName()}__}" th:object="${timer}" method=post>
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" th:text="${job.getJobName()}"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:action="@{/action/__${job.getJobName()}__}" th:object="${timer}" method=post>
 
-                                    <div id="start" class="form-group row">
-                                        <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" type="datetime-local" th:name="startDate"
-                                                   th:value="${job.getStartDate()}" th:id="startDate" />
-                                        </div>
+                                            <div id="start" class="form-group row">
+                                                <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control" type="datetime-local" th:name="startDate"
+                                                           th:value="${job.getStartDate()}" th:id="startDate" />
+                                                </div>
+                                            </div>
+                                            <div id="cron" class="form-group row">
+                                                <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
+                                                <div class="form-check col-sm-8">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           th:value="${job.isCronJob()}" id="cronJob"
+                                                           th:name="cronJob" th:id="cronJob">
+                                                </div>
+                                            </div>
+                                            <div id="end" class="form-group row">
+                                                <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control" type="datetime-local"
+                                                           th:value="${job.getEndDate()}" th:name="endDate" th:id="endDate">
+                                                </div>
+                                            </div>
+                                            <div id="repeat" class="form-group row">
+                                                <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
+                                                <div class="col-sm-8">
+                                                    <input  class="form-control" type="number"
+                                                           th:value="${job.getRepeatInterval()}" th:name="repeatInterval" th:id="repeatInterval">
+                                                </div>
+                                            </div>
+                                            <div id="run" class="form-group row">
+                                                <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
+                                                <div class="form-check col-sm-8">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           th:value="${job.isRunForever()}" th:name="runForever" th:id="runForever">
+                                                </div>
+                                            </div>
+                                            <div id="totalFire" class="form-group row">
+                                                <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
+                                                <div class="col-sm-8">
+                                                    <input  class="form-control" type="number"
+                                                           th:value="${job.getTotalFireCount()}" th:name="totalFireCount" th:id="totalFireCount">
+                                                </div>
+                                            </div>
+                                            <div id="cron-text" class="form-group row">
+                                                <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
+                                                <div class="col-sm-8">
+                                                    <input  class="form-control" type="number"
+                                                           th:value="${job.getCronExpression()}" th:name="cronExpression" th:id="cronExpression">
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div id="cron" class="form-group row">
-                                        <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
-                                        <div class="form-check col-sm-8">
-                                            <input class="form-check-input" type="checkbox"
-                                                   th:value="${job.isCronJob()}" id="cronJob"
-                                                   th:name="cronJob" th:id="cronJob">
-                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" th:name="action" th:value="update" class="btn btn-primary">Save changes</button>
                                     </div>
-                                    <div id="end" class="form-group row">
-                                        <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" type="datetime-local"
-                                                   th:value="${job.getEndDate()}" th:name="endDate" th:id="endDate">
-                                        </div>
-                                    </div>
-                                    <div id="repeat" class="form-group row">
-                                        <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
-                                        <div class="col-sm-8">
-                                            <input  class="form-control" type="number"
-                                                   th:value="${job.getRepeatInterval()}" th:name="repeatInterval" th:id="repeatInterval">
-                                        </div>
-                                    </div>
-                                    <div id="run" class="form-group row">
-                                        <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
-                                        <div class="form-check col-sm-8">
-                                            <input class="form-check-input" type="checkbox"
-                                                   th:value="${job.isRunForever()}" th:name="runForever" th:id="runForever">
-                                        </div>
-                                    </div>
-                                    <div id="totalFire" class="form-group row">
-                                        <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
-                                        <div class="col-sm-8">
-                                            <input  class="form-control" type="number"
-                                                   th:value="${job.getTotalFireCount()}" th:name="totalFireCount" th:id="totalFireCount">
-                                        </div>
-                                    </div>
-                                    <div id="cron-text" class="form-group row">
-                                        <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
-                                        <div class="col-sm-8">
-                                            <input  class="form-control" type="number"
-                                                   th:value="${job.getCronExpression()}" th:name="cronExpression" th:id="cronExpression">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" th:name="action" th:value="update" class="btn btn-primary">Save changes</button>
+                                </div>
+
                             </div>
                         </div>
 
-                    </div>
                 </div>
-
-
             </form>
         </div>
     </div>

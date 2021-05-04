@@ -10,7 +10,7 @@
 <style>
     button{
         margin-left: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
     .header{
         align-items: center;
@@ -29,7 +29,18 @@
     }
 
 </style>
-
+<script th:inline="javascript">
+    $(document).ready(function (){
+        $("#cron-text").hide();
+        $("#cronJob").click(function (){
+            $("#cron-text").toggle("slow");
+            $("#end").toggle("slow");
+            $("#repeat").toggle("slow");
+            $("#run").toggle("slow");
+            $("#totalFire").toggle("slow");
+        });
+    });
+</script>
 <body>
     <div class="header">
         <h3 align="center">Job Actions</h3>
@@ -71,7 +82,7 @@
                                         <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
                                         <div class="form-check col-sm-8">
                                             <input class="form-check-input" type="checkbox"
-                                                   onclick="switchJobType()" th:value="${job.isCronJob()}"
+                                                   th:value="${job.isCronJob()}" id="cronJob"
                                                    th:name="cronJob" th:id="cronJob">
                                         </div>
                                     </div>

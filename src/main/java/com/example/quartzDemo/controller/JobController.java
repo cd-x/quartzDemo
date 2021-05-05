@@ -45,7 +45,7 @@ public class JobController {
 
 		List<String> jobList = Arrays.asList("Quote", "DadJoke");
         model.addAttribute("jobList", jobList);
-        return "home2";
+        return "home";
 	}
 	
 	
@@ -67,7 +67,7 @@ public class JobController {
 			log.error(e.getMessage(), e);
 		}
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("success");
+		mv.setViewName("home");
 		return mv;
 	}
 

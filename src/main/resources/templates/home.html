@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headFragment(pageTitle)">
+    <title th:text="${pageTitle}">Quartz Application</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<script th:inline="javascript">
+    $(document).ready(function (){
+        $("#cron-text").hide();
+        $("#cronJob").click(function (){
+
+            $("#jobType").slideToggle("slow",function (){
+                $(this).slideToggle("slow");
+            })
+                .text( ($("#jobType").text() == 'Periodic Job' ? 'Cron Job' : 'Periodic Job') )
+                .toggleClass("active");
+
+            $("#cron-text").toggle("slow");
+            $("#end").toggle("slow");
+            $("#repeat").toggle("slow");
+            $("#run").toggle("slow");
+            $("#totalFire").toggle("slow");
+        });
+    });
+</script>
+<body>
+
+<nav  th:fragment="navbar"  class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Quartz Demo</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a th:href="@{/}">Start Job</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Job Pages <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a th:href="@{/getAJoke}" target="_blank">Joke</a></li>
+                    <li><a th:href="@{/getAQuote}" target="_blank">Quote</a></li>
+                    <li><a href="#" target="_blank">News</a></li>
+                </ul>
+            </li>
+            <li><a th:href="@{/getAllRunningJobs}">All Running Jobs</a></li>
+            <li><a th:href="@{/actions}">Job Actions</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <form th:action="@{/runTimer}" th:object="${timer}" method=post>
+        <div class="form-group row">
+            <h1 id="jobType"class="display-4" align="center">Periodic Job</h1>
+        </div>
+        <div id="start" class="form-group row">
+            <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="datetime-local" th:name="startDate"
+                        th:id="startDate" />
+            </div>
+        </div>
+        <div id="cron" class="form-group row">
+            <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
+            <div class="form-check col-sm-8">
+                <input class="form-check-input" type="checkbox"
+                       id="cronJob"
+                       th:name="cronJob" th:id="cronJob">
+            </div>
+        </div>
+        <div id="end" class="form-group row">
+            <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="datetime-local"
+                        th:name="endDate" th:id="endDate">
+            </div>
+        </div>
+        <div id="repeat" class="form-group row">
+            <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
+            <div class="col-sm-8">
+                <input  class="form-control" type="number"
+                         th:name="repeatInterval" th:id="repeatInterval">
+            </div>
+        </div>
+        <div id="run" class="form-group row">
+            <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
+            <div class="form-check col-sm-8">
+                <input class="form-check-input" type="checkbox"
+                        th:name="runForever" th:id="runForever">
+            </div>
+        </div>
+        <div id="totalFire" class="form-group row">
+            <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
+            <div class="col-sm-8">
+                <input  class="form-control" type="number"
+                        th:name="totalFireCount" th:id="totalFireCount">
+            </div>
+        </div>
+        <div id="cron-text" class="form-group row">
+            <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
+            <div class="col-sm-8">
+                <input  class="form-control" type="number"
+                        th:name="cronExpression" th:id="cronExpression">
+            </div>
+        </div>
+        <div id="job" class="form-group row">
+            <label th:for="jobName" class="col-sm-4 col-form-label">Select Job</label>
+            <div class="col-sm-8">
+                <select class="form-control" th:id="jobName" th:name="jobName">
+                    <option th:each="job : ${jobList}" th:value="${job}" th:text="${job}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

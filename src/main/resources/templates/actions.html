@@ -6,22 +6,10 @@
         margin-left: 10px;
         margin-bottom: 10px;
     }
-    .header{
-        align-items: center;
-        margin-bottom: 20px;
-        margin-top: 10px;
-        margin-left: auto;
-    }
-    span{
-        margin-bottom: auto;
-        align-items: baseline;
-        margin-bottom: 40px;
-    }
     p{
-      display: inline-block;
         font-weight: bold;
         font-size: large;
-        align-content: start;
+        align-content: end;
         margin-right: 40px;
     }
 
@@ -51,14 +39,15 @@
                     <p th:text="${job.getJobName()}"></p>
                 </div>
                 <div class="col-sm-8">
-                        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Update</button>
+                        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal"
+                                th:attrappend="data-target=${job.getJobName()}">Update</button>
                         <button type="submit" th:name="action" th:value="pause" class="btn btn-warning">Pause</button>
                         <button type="submit" th:name="action" th:value="resume" class="btn btn-success">Resume</button>
                         <button type="submit" th:name="action" th:value="delete" class="btn btn-danger">Delete</button>
 
 
                         <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal fade" id="myModal" role="dialog" th:attrappend="id=${job.getJobName()}">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->

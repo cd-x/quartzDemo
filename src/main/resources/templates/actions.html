@@ -12,17 +12,20 @@
         align-content: end;
         margin-right: 40px;
     }
+    .cron-text{
+        display: none;
+    }
 
 </style>
 <script th:inline="javascript">
     $(document).ready(function (){
-        $("#cron-text").hide();
-        $("#cronJob").click(function (){
-            $("#cron-text").toggle("slow");
-            $("#end").toggle("slow");
-            $("#repeat").toggle("slow");
-            $("#run").toggle("slow");
-            $("#totalFire").toggle("slow");
+        $(".cron-check").click(function (){
+            var modalId = $(this).closest("div .modal").attr('id');
+            $('#'+modalId).find("#end").toggle("slow");
+            $('#'+modalId).find("#repeat").toggle("slow");
+            $('#'+modalId).find("#run").toggle("slow");
+            $('#'+modalId).find("#totalFire").toggle("slow");
+            $('#'+modalId).find("#cron-text").toggle("slow");
         });
     });
 </script>
@@ -69,12 +72,12 @@
                                             <div id="cron" class="form-group row">
                                                 <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
                                                 <div class="form-check col-sm-8">
-                                                    <input class="form-check-input" type="checkbox"
+                                                    <input class="form-check-input cron-check" type="checkbox"
                                                            th:value="${job.isCronJob()}" id="cronJob"
                                                            th:name="cronJob" th:id="cronJob">
                                                 </div>
                                             </div>
-                                            <div id="end" class="form-group row">
+                                            <div id="end" class="form-group row end">
                                                 <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
                                                 <div class="col-sm-8">
                                                     <input class="form-control" type="datetime-local"
@@ -102,7 +105,7 @@
                                                            th:value="${job.getTotalFireCount()}" th:name="totalFireCount" th:id="totalFireCount">
                                                 </div>
                                             </div>
-                                            <div id="cron-text" class="form-group row">
+                                            <div id="cron-text" class="form-group row cron-text">
                                                 <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
                                                 <div class="col-sm-8">
                                                     <input  class="form-control" type="number"

@@ -10,6 +10,9 @@
 </head>
 <script th:inline="javascript">
     $(document).ready(function (){
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+
         $("#cron-text").hide();
         $("#cronJob").click(function (){
 
@@ -54,50 +57,75 @@
         <div class="form-group row">
             <h1 id="jobType"class="display-4" align="center">Periodic Job</h1>
         </div>
-        <div id="start" class="form-group row">
+        <div id="start" class="form-group row"
+             data-toggle="tooltip" data-placement="right"
+             title="Job life cycle starts at this date and time">
+
             <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
             <div class="col-sm-8">
                 <input class="form-control" type="datetime-local" th:name="startDate"
                         th:id="startDate" />
             </div>
+
         </div>
-        <div id="cron" class="form-group row">
+        <div id="cron" class="form-group row"
+             data-toggle="tooltip" data-placement="right"
+             title="Check if you will schedule using cron expression">
+
             <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
             <div class="form-check col-sm-8">
                 <input class="form-check-input" type="checkbox"
                        id="cronJob"
                        th:name="cronJob" th:id="cronJob">
             </div>
+
         </div>
-        <div id="end" class="form-group row">
+        <div id="end" class="form-group row"
+             data-toggle="tooltip" data-placement="right"
+             title="Job life cycle end at this date and time">
+
             <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
             <div class="col-sm-8">
                 <input class="form-control" type="datetime-local"
                         th:name="endDate" th:id="endDate">
             </div>
+
         </div>
-        <div id="repeat" class="form-group row">
+        <div id="repeat" class="form-group row"
+             data-toggle="tooltip" data-placement="right"
+             title="It takes time interval between consecutive triggers in seconds">
             <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
             <div class="col-sm-8">
                 <input  class="form-control" type="number"
                          th:name="repeatInterval" th:id="repeatInterval">
             </div>
         </div>
-        <div id="run" class="form-group row">
+        <div id="run" class="form-group row"
+             data-toggle="tooltip" data-placement="right"
+             title="Check the box if you want the job to run even after life cycle">
             <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
             <div class="form-check col-sm-8">
                 <input class="form-check-input" type="checkbox"
                         th:name="runForever" th:id="runForever">
             </div>
         </div>
-        <div id="totalFire" class="form-group row">
+        <div id="totalFire" class="form-group row"
+             data-toggle="tooltip" data-placement="right"
+             title="Enter number of times you want this job to execute with entered interval">
             <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
             <div class="col-sm-8">
                 <input  class="form-control" type="number"
                         th:name="totalFireCount" th:id="totalFireCount">
             </div>
         </div>
-        <div id="cron-text" class="form-group row">
+        <div id="cron-text" class="form-group row"
+
+             data-toggle="popover" title="About Cron expression" data-placement="top"
+             data-html="true" data-content="To know more visit
+                    <a href='https://www.freeformatter.com/cron-expression-generator-quartz.html'
+                    target='_blank'>
+                    Cron Expression Generator</a>">
+
             <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
             <div class="col-sm-8">
                 <input  class="form-control" type="number"

@@ -142,7 +142,8 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteJobTitle">Job deletion</h5>
+                                        <h5 class="modal-title" id="deleteJobTitle"
+                                            th:text="${job.getJobName()}">Job deletion</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -151,8 +152,10 @@
                                         Are you sure, you want to delete this job ?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        <form th:action="@{/action/__${job.getJobName()}__}" method=post>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" th:name="action" th:value="delete" class="btn btn-danger">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

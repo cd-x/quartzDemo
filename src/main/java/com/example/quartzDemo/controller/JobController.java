@@ -51,7 +51,7 @@ public class JobController {
 	
 	
 	@RequestMapping("/runTimer")
-	public ModelAndView runTimer(@ModelAttribute("timer") TimerInfo info){
+	public String runTimer(@ModelAttribute("timer") TimerInfo info){
 		log.info(info.toString());
 		String jobPackage = "com.example.quartzDemo.job.";
 		Class jobName = null;
@@ -66,9 +66,10 @@ public class JobController {
 		}catch (SchedulerException e) {
 			log.error(e.getMessage(), e);
 		}
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("home");
-		return mv;
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("");
+//		mv.setViewName("home");
+		return "redirect:/";
 	}
 
 
@@ -128,7 +129,8 @@ public class JobController {
         boolean deleted = service.deleteJob(jobKey);
         List<TimerInfo> jobList = service.getAllRunningJobs();
         modelAndView.addObject("jobList",jobList);
-
+		modelAndView.addObject("status",deleted);
+		modelAndView.addObject("message","delete");
         if(deleted)
             log.info("[Deleted] : "+jobKey);
         else

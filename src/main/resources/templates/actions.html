@@ -19,6 +19,10 @@
 </style>
 <script th:inline="javascript">
     $(document).ready(function (){
+        $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").slideUp(500);
+        });
+
         $(".cron-check").click(function (){
             var modalId = $(this).closest("div .modal").attr('id');
             $('#'+modalId).find("#end").toggle("slow");
@@ -31,6 +35,12 @@
 </script>
 <body>
     <div th:insert="home:: navbar"></div>
+
+    <div th:unless="${noaction}" th:class="${status} ?'alert alert-success': 'alert alert-danger'" id="alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong th:text="${status} ? 'Success!':'Failed!'"> </strong> in performing
+        <strong th:text="${message}"></strong>
+    </div>
     <div>
         <h1 class="display-4" align="center">Job Actions</h1>
     </div>

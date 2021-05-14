@@ -85,6 +85,7 @@ public class JobController {
     public ModelAndView actions( ModelAndView modelAndView){
         List<TimerInfo> jobList = service.getAllRunningJobs();
 	    modelAndView.addObject("jobList",jobList);
+	    modelAndView.addObject("noaction",true);
 	    modelAndView.addObject("timer",new TimerInfo());
 	    modelAndView.setViewName("actions");
 	    return modelAndView;
@@ -95,6 +96,8 @@ public class JobController {
 		boolean paused = service.pauseJob(jobKey);
         List<TimerInfo> jobList = service.getAllRunningJobs();
         modelAndView.addObject("jobList",jobList);
+        modelAndView.addObject("status",paused);
+        modelAndView.addObject("message","pause");
 	    if(paused)
     	    log.info("[Paused] : "+jobKey);
 	    else
@@ -109,6 +112,8 @@ public class JobController {
         boolean resumed = service.resumeJob(jobKey);
         List<TimerInfo> jobList = service.getAllRunningJobs();
         modelAndView.addObject("jobList",jobList);
+		modelAndView.addObject("status",resumed);
+		modelAndView.addObject("message","resume");
         if(resumed)
             log.info("[Resumed] : "+jobKey);
         else
@@ -141,6 +146,8 @@ public class JobController {
 		boolean updated = service.updateJob(jobKey,timerInfo);
 		List<TimerInfo> jobList = service.getAllRunningJobs();
 		modelAndView.addObject("jobList",jobList);
+		modelAndView.addObject("status",updated);
+		modelAndView.addObject("message","update");
 
 		if(updated)
 			log.info("[Updated] : "+jobKey);

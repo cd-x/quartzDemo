@@ -59,7 +59,7 @@
         </div>
         <div id="start" class="form-group row"
              data-toggle="tooltip" data-placement="right"
-             title="Job life cycle starts at this date and time">
+             title="Job execution will start at this date-time">
 
             <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
             <div class="col-sm-8">
@@ -70,7 +70,7 @@
         </div>
         <div id="cron" class="form-group row"
              data-toggle="tooltip" data-placement="right"
-             title="Check if you will schedule using cron expression">
+             title="Check this box if a recurring job needs to be scheduled using a CRON expression">
 
             <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
             <div class="form-check col-sm-8">
@@ -82,7 +82,7 @@
         </div>
         <div id="end" class="form-group row"
              data-toggle="tooltip" data-placement="right"
-             title="Job life cycle end at this date and time">
+             title="Job execution will end at this date-time">
 
             <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
             <div class="col-sm-8">
@@ -93,7 +93,8 @@
         </div>
         <div id="repeat" class="form-group row"
              data-toggle="tooltip" data-placement="right"
-             title="It takes time interval between consecutive triggers in seconds">
+             title="The time interval between two consecutive job triggers (in seconds)">
+
             <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
             <div class="col-sm-8">
                 <input  class="form-control" type="number"
@@ -102,7 +103,8 @@
         </div>
         <div id="run" class="form-group row"
              data-toggle="tooltip" data-placement="right"
-             title="Check the box if you want the job to run even after life cycle">
+             title="Check this box if the job needs to run without any specific end date">
+
             <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
             <div class="form-check col-sm-8">
                 <input class="form-check-input" type="checkbox"
@@ -111,7 +113,8 @@
         </div>
         <div id="totalFire" class="form-group row"
              data-toggle="tooltip" data-placement="right"
-             title="Enter number of times you want this job to execute with entered interval">
+             title="The maximum number of times the job will be triggered within the specified start and end date">
+
             <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
             <div class="col-sm-8">
                 <input  class="form-control" type="number"
@@ -121,7 +124,7 @@
         <div id="cron-text" class="form-group row"
 
              data-toggle="popover" title="About Cron expression" data-placement="top"
-             data-html="true" data-content="To know more visit
+             data-html="true" data-content="To know more about the CRON expressions and the supported formats, visit
                     <a href='https://www.freeformatter.com/cron-expression-generator-quartz.html'
                     target='_blank'>
                     Cron Expression Generator</a>">

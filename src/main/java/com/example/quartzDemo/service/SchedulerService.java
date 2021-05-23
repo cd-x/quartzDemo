@@ -96,6 +96,7 @@ public class SchedulerService {
 			}
 			jobDetail.getJobDataMap().put(jobKey, newJobDetail);
 			scheduler.addJob(jobDetail, true, true);
+			scheduler.triggerJob(new JobKey(jobKey));
 			return true;
 		}catch (SchedulerException e){
 			log.error("Update failed:: "+e.getMessage(),e);

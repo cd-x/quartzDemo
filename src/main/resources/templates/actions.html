@@ -73,54 +73,81 @@
                                     <div class="modal-body">
                                         <form th:action="@{/action/__${job.getJobName()}__}" th:object="${timer}" method=post>
 
-                                            <div id="start" class="form-group row">
+                                            <div id="start" class="form-group row"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="Job execution will start at this date-time">
+
                                                 <label th:for="startDate" class="col-sm-4 col-form-label">Start Date</label>
                                                 <div class="col-sm-8">
                                                     <input class="form-control" type="datetime-local" th:name="startDate"
                                                            th:value="${job.getStartDate()}" th:id="startDate" />
                                                 </div>
                                             </div>
-                                            <div id="cron" class="form-group row">
+                                            <div id="cron" class="form-group row"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="Check this box if a recurring job needs to be scheduled using a CRON expression">
+
                                                 <label th:for="cronJob" class="col-sm-4 col-form-label">Cron Job</label>
-                                                <div class="form-check col-sm-8">
+                                                <div class="form-check col-sm-8" align="left">
                                                     <input class="form-check-input cron-check" type="checkbox"
-                                                           th:value="${job.isCronJob()}" id="cronJob"
+                                                           id="cronJob"
                                                            th:name="cronJob" th:id="cronJob">
                                                 </div>
                                             </div>
-                                            <div id="end" class="form-group row end">
+                                            <div id="end" class="form-group row end"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="Job execution will end at this date-time">
+
                                                 <label th:for="endDate" class="col-sm-4 col-form-label">End Date</label>
                                                 <div class="col-sm-8">
                                                     <input class="form-control" type="datetime-local"
                                                            th:value="${job.getEndDate()}" th:name="endDate" th:id="endDate">
                                                 </div>
                                             </div>
-                                            <div id="repeat" class="form-group row">
+                                            <div id="repeat" class="form-group row"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="The time interval between two consecutive job triggers (in seconds)">
+
                                                 <label th:for="repeatInterval" class="col-sm-4 col-form-label">Trigger Interval</label>
                                                 <div class="col-sm-8">
                                                     <input  class="form-control" type="number"
-                                                           th:value="${job.getRepeatInterval()}" th:name="repeatInterval" th:id="repeatInterval">
+                                                           th:value="${job.getRepeatInterval()}"
+                                                            th:name="repeatInterval" th:id="repeatInterval" required>
                                                 </div>
                                             </div>
-                                            <div id="run" class="form-group row">
+                                            <div id="run" class="form-group row"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="Check this box if the job needs to run without any specific end date">
+
                                                 <label th:for="runForever" class="col-sm-4 col-form-label">Run Forever</label>
-                                                <div class="form-check col-sm-8">
+                                                <div class="form-check col-sm-8" align="left">
                                                     <input class="form-check-input" type="checkbox"
-                                                           th:value="${job.isRunForever()}" th:name="runForever" th:id="runForever">
+                                                           th:name="runForever" th:id="runForever">
                                                 </div>
                                             </div>
-                                            <div id="totalFire" class="form-group row">
+                                            <div id="totalFire" class="form-group row"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="The maximum number of times the job will be triggered within the specified start and end date">
+
                                                 <label th:for="totalFireCount" class="col-sm-4 col-form-label">Trigger Count</label>
                                                 <div class="col-sm-8">
                                                     <input  class="form-control" type="number"
-                                                           th:value="${job.getTotalFireCount()}" th:name="totalFireCount" th:id="totalFireCount">
+                                                           th:value="${job.getTotalFireCount()}"
+                                                            th:name="totalFireCount" th:id="totalFireCount" required>
                                                 </div>
                                             </div>
-                                            <div id="cron-text" class="form-group row cron-text">
+                                            <div id="cron-text" class="form-group row cron-text"
+                                                 data-toggle="popover" title="Please use cron expression generator." data-placement="top"
+                                                 data-html="true" data-content="To know more about the CRON expressions and the
+                                                     supported formats, visit
+                                                    <a href='https://www.freeformatter.com/cron-expression-generator-quartz.html'
+                                                    target='_blank'>
+                                                    Cron Expression Generator</a>">
+
                                                 <label th:for="cronExpression" class="col-sm-4 col-form-label">Cron Expression</label>
                                                 <div class="col-sm-8">
-                                                    <input  class="form-control" type="number"
-                                                           th:value="${job.getCronExpression()}" th:name="cronExpression" th:id="cronExpression">
+                                                    <input  class="form-control" type="text"
+                                                            th:name="cronExpression" th:id="cronExpression">
                                                 </div>
                                             </div>
                                         </form>
